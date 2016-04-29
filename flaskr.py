@@ -49,7 +49,7 @@ def add_entry():
 @app.route('/login', methods=('GET', 'POST'))
 def login():
     error = None
-    if redirect.method == 'POST':
+    if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME']:
             error = 'Invalid username'
         elif request.form['password'] != app.config['PASSWORD']:
@@ -60,9 +60,9 @@ def login():
             return redirect(url_for('show_entries'))
     return render_template('login.html', error=error)
 
-@app.route('/logout', methods=('POST',))
+@app.route('/logout')
 def logout():
-    session.pop('logged in', None)
+    session.pop('logged_in', None)
     flash('You were logged out.')
     return redirect(url_for('show_entries'))
 
